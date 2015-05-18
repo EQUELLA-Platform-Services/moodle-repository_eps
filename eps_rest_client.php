@@ -14,12 +14,14 @@ class eps_rest_client {
     private $baseurl = null;
     private $accesstoken = null;
     private $http = null;
+    private $xauthstr = '';
 
     public function __construct($baseurl, $accesstoken) {
         $this->baseurl = trim($baseurl, '/') . '/api/';
         $this->accesstoken = $accesstoken;
         $this->http = new curl(array('cache'=>true));
-        $this->http->setHeader('X-Authorization: access_token=' . $this->accesstoken);
+        $this->xauthstr = 'X-Authorization: access_token=' . $this->accesstoken;
+        $this->http->setHeader($this->xauthstr);
     }
 
     public static function get_endpoint() {
@@ -56,9 +58,7 @@ class eps_rest_client {
         $result = $this->http->download_one($info->links->delivery, null, array('file' => $file, 'timeout' => 5, 'followlocation' => true, 'maxredirs' => 3));
         fclose($file);
     }
-    public function download_from_url($url, $savepath) {
-        $file = fopen($savepath, 'w');
-        $result = $this->http->download_one($url, null, array('file' => $file, 'timeout' => 5, 'followlocation' => true, 'maxredirs' => 3));
-        fclose($file);
+    public function get_content_from_url($url) {
+        return download_file_content($url, array($this->xauthstr));
     }
 }

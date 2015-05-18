@@ -38,6 +38,7 @@ echo $OUTPUT->box($info->modifiedDate);
 $attachments = array();
 if (!empty($info->attachments)) {
     foreach($info->attachments as $attachment) {
+        var_dump($attachment->links);
         $params = array(
             'contextid'=>$contextid,
             'repositoryid'=>$repositoryid,

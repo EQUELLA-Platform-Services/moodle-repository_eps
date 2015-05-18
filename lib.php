@@ -81,9 +81,7 @@ class repository_eps extends repository {
         global $CFG;
         $saveas = $this->prepare_file('');
         try {
-            $this->eps->download_from_url($url, $saveas);
-            $content = file_get_contents($saveas);
-            unlink($saveas);
+            $content = $this->eps->get_content_from_url($url);
             send_file($content, basename($url), 30*24*60*60, 0, true);
         } catch (Exception $e) {}
     }
