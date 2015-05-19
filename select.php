@@ -7,6 +7,7 @@ $context = context::instance_by_id($contextid);
 $json = required_param('json', PARAM_RAW);
 
 require_login();
+require_capability('repository/eps:view', $context);
 
 //$repository = repository::get_repository_by_id($repositoryid, $contextid);
 //$epsoptions = ($repository->get_eps_options());

@@ -1,6 +1,7 @@
 <?php
 require_once(dirname(dirname(dirname(__FILE__))).'/config.php');
 require_once(dirname(__DIR__) . '/lib.php');
+require_login();
 $uuid = required_param('uuid', PARAM_TEXT);
 $version = required_param('version', PARAM_TEXT);
 $contextid = required_param('contextid', PARAM_INT);
@@ -14,7 +15,7 @@ $urlparams = array(
 );
 $pageurl = new moodle_url('/repository/eps/view.php', $urlparams);
 
-require_login();
+require_capability('repository/eps:view', $context);
 
 $repository = repository::get_repository_by_id($repositoryid, $contextid);
 $epsoptions = ($repository->get_eps_options());
